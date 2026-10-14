@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     template: "%s | LLM Gateway",
-    default: "LLM Gateway - Intelligent Multi-Model Orchestration",
+    default: "LLM Gateway",
   },
-  description: "Enterprise gateway for LLM orchestration, token budget management, retries, and conversational context.",
+  description: "Chat with AI and ask questions about your PDFs.",
 };
 
 export default function RootLayout({

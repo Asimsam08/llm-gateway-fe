@@ -205,10 +205,7 @@ export const chatService = {
       const failedAssistantMessage: Message = {
         id: `err_${Date.now()}`,
         role: "assistant",
-        content:
-          error instanceof Error
-            ? `⚠️ Request failed: ${error.message}. Please verify the backend and try again.`
-            : "⚠️ Unable to reach LLM Gateway backend service. Please check your connection.",
+        content: "Unable to generate a response right now. Please try again.",
         status: "FAILED",
         createdAt: new Date().toISOString(),
         conversationId,

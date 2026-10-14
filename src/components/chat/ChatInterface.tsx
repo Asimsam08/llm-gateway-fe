@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useChat } from "@/context/ChatContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigation } from "@/context/NavigationContext";
@@ -23,17 +23,12 @@ export function ChatInterface() {
   } = useChat();
 
   const { user } = useAuth();
-  const [selectedPrompt, setSelectedPrompt] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto scroll to bottom when messages update or during generation
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isGenerating]);
-
-  const handleSelectPrompt = (promptText: string) => {
-    sendMessage(promptText);
-  };
 
   const handleRetryLastMessage = () => {
     if (messages.length > 0) {
@@ -69,10 +64,7 @@ export function ChatInterface() {
                 <p className="text-xs text-zinc-400">Loading conversation history...</p>
               </div>
             ) : messages.length === 0 ? (
-              <EmptyChatState
-                userName={user?.name || "there"}
-                onSelectPrompt={handleSelectPrompt}
-              />
+              <EmptyChatState userName={user?.name || "there"} />
             ) : (
               <div className="py-4 space-y-2">
                 {messages.map((message, idx) => (
@@ -97,10 +89,8 @@ export function ChatInterface() {
                       </div>
                       <div className="space-y-1 pt-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-semibold text-white">LLM Gateway</span>
-                          <span className="text-[10px] text-indigo-400 font-mono">
-                            Orchestrating...
-                          </span>
+                          <span className="text-xs font-semibold text-white">Assistant</span>
+                          <span className="text-[10px] text-indigo-400">Thinking...</span>
                         </div>
                         <div className="flex items-center gap-1.5 pt-1">
                           <span className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce" />
@@ -128,7 +118,6 @@ export function ChatInterface() {
             <ChatInput
               onSend={(content) => sendMessage(content)}
               isGenerating={isGenerating}
-              initialValue={selectedPrompt}
             />
           </div>
         </main>

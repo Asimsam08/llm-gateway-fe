@@ -6,8 +6,6 @@ import { useNavigation } from "@/context/NavigationContext";
 import {
   MenuIcon,
   PlusIcon,
-  BotIcon,
-  SparklesIcon,
   CheckIcon,
   EditIcon,
   TrashIcon,

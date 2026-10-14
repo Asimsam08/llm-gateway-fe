@@ -7,7 +7,6 @@ import {
   CopyIcon,
   CheckIcon,
   RefreshCwIcon,
-  SparklesIcon,
   BookOpenIcon,
   AlertCircleIcon,
   SpinnerIcon,
@@ -60,11 +59,7 @@ export function PdfQueryItem({ query, userName = "You", onRetry }: PdfQueryItemP
             {/* Meta Header */}
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800/60 pb-2">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-white">RAG Synthesis Engine</span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                  <SparklesIcon size={10} />
-                  Context-Grounded
-                </span>
+                <span className="text-xs font-semibold text-white">Assistant</span>
               </div>
 
               {/* Latency & Tokens */}
@@ -87,20 +82,17 @@ export function PdfQueryItem({ query, userName = "You", onRetry }: PdfQueryItemP
               <div className="py-6 flex flex-col items-center justify-center space-y-2.5 text-center">
                 <SpinnerIcon size={24} className="text-indigo-400" />
                 <p className="text-xs text-zinc-300 font-medium animate-pulse">
-                  Querying document vector index...
-                </p>
-                <p className="text-[11px] text-zinc-500">
-                  Retrieving top matching chunks & generating response
+                  Thinking...
                 </p>
               </div>
             ) : query.status === "failed" ? (
               <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300 space-y-2">
                 <div className="flex items-center gap-2 font-semibold">
                   <AlertCircleIcon size={15} className="text-red-400" />
-                  <span>Query Execution Failed</span>
+                  <span>Something went wrong</span>
                 </div>
                 <p className="text-zinc-400">
-                  {query.errorMessage || "Unable to retrieve semantic answer from backend."}
+                  {query.errorMessage || "Unable to generate a response right now. Please try again."}
                 </p>
                 {onRetry && (
                   <button

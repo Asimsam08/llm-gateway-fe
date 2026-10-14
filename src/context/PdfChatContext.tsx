@@ -102,7 +102,7 @@ export function PdfChatProvider({ children }: { children: React.ReactNode }) {
                   uploadProgress: percent,
                   status: percent < 100 ? "uploading" : "processing",
                   processingStep:
-                    percent < 100 ? `Uploading (${percent}%)` : "Processing PDF & vectors...",
+                    percent < 100 ? `Uploading (${percent}%)` : "Processing PDF...",
                 }
               : prev
           );
@@ -128,7 +128,7 @@ export function PdfChatProvider({ children }: { children: React.ReactNode }) {
           return updated;
         });
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : "Failed to upload PDF";
+        const errorMsg = "Unable to upload this PDF right now. Please try again.";
         const failedDoc: PdfDocument = {
           ...tempDoc,
           status: "failed",
@@ -188,7 +188,7 @@ export function PdfChatProvider({ children }: { children: React.ReactNode }) {
           return updated;
         });
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : "Query execution failed";
+        const errorMsg = "Unable to generate a response right now. Please try again.";
         setQueries((prev) => {
           const updated = prev.map((q) =>
             q.id === queryId

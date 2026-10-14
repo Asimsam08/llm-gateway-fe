@@ -4,7 +4,7 @@ import { LoginForm } from "@/components/auth/LoginForm";
 
 export const metadata: Metadata = {
   title: "Sign In | LLM Gateway",
-  description: "Sign in to orchestrate LLMs, manage token budgets, and view conversation histories.",
+  description: "Sign in to chat with AI and ask questions about your PDFs.",
 };
 
 export default function LoginPage() {
@@ -12,7 +12,7 @@ export default function LoginPage() {
     <AuthLayout
       activeTab="login"
       title="Welcome Back"
-      subtitle="Sign in to your LLM Gateway account"
+      subtitle="Sign in to start chatting"
     >
       <LoginForm />
     </AuthLayout>

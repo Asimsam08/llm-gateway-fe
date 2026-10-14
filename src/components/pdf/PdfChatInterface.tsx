@@ -202,7 +202,7 @@ export function PdfChatInterface({
             <div className="text-center max-w-xl mx-auto px-4 mb-6 space-y-3">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium">
                 <SparklesIcon size={14} />
-                <span>PDF Vector RAG Engine</span>
+                <span>PDF Chat</span>
               </div>
               <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                 Chat with your{" "}
@@ -312,7 +312,7 @@ export function PdfChatInterface({
                     : isBusy
                     ? "Uploading / Processing PDF... Please wait"
                     : isQuerying
-                    ? "Searching document vector index..."
+                    ? "Thinking..."
                     : `Ask a question about ${activeDocument.fileName || activeDocument.name}...`
                 }
                 className="flex-1 max-h-40 bg-transparent resize-none text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none px-2 py-1 leading-relaxed disabled:opacity-50"

@@ -164,19 +164,6 @@ export const authService = {
   logout(): void {
     clearStoredAuth();
   },
-
-  /**
-   * Demo/Offline fallback authentication for rapid local testing
-   */
-  async mockAuthenticate(user: User): Promise<AuthResponse> {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const token = `mock_jwt_token_${Date.now()}`;
-    setStoredToken(token);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
-    }
-    return { token, user, message: "Demo authentication successful" };
-  },
 };
 
 

@@ -13,12 +13,11 @@ import {
   ArrowRightIcon,
   SpinnerIcon,
   AlertCircleIcon,
-  SparklesIcon,
 } from "@/components/icons";
 
 export function LoginForm() {
   const router = useRouter();
-  const { login, demoLogin, isLoading, isAuthenticated } = useAuth();
+  const { login, isLoading, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -80,21 +79,6 @@ export function LoginForm() {
       } else {
         setErrorMessage("Invalid email or password. Please verify and try again.");
       }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleDemoSignIn = async () => {
-    setErrorMessage(null);
-    setIsSubmitting(true);
-    try {
-      await demoLogin();
-      router.push("/");
-    } catch (err: unknown) {
-      setErrorMessage(
-        err instanceof Error ? err.message : "Failed to initialize demo session."
-      );
     } finally {
       setIsSubmitting(false);
     }
@@ -227,31 +211,12 @@ export function LoginForm() {
             </>
           ) : (
             <>
-              <span>Sign In to Gateway</span>
+              <span>Sign In</span>
               <ArrowRightIcon size={14} />
             </>
           )}
         </button>
       </form>
-
-      {/* Divider */}
-      <div className="relative flex items-center justify-center my-2">
-        <div className="border-t border-zinc-800 w-full" />
-        <span className="bg-zinc-900 px-3 text-[11px] text-zinc-500 uppercase tracking-wider font-mono">
-          Or Quick Access
-        </span>
-      </div>
-
-      {/* Instant Demo Login Button */}
-      <button
-        type="button"
-        onClick={handleDemoSignIn}
-        disabled={isBusy}
-        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-zinc-800/80 hover:bg-zinc-800 border border-zinc-700/60 hover:border-zinc-600 text-zinc-200 text-xs font-medium transition-all duration-150 active:scale-[0.99] disabled:opacity-50 cursor-pointer"
-      >
-        <SparklesIcon size={14} className="text-amber-400" />
-        <span>Try Demo Mode (Instant Sandbox)</span>
-      </button>
 
       {/* Bottom Switch Link */}
       <div className="text-center pt-2">

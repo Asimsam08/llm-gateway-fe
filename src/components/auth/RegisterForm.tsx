@@ -296,7 +296,7 @@ export function RegisterForm() {
         <div className="flex items-start gap-2 pt-1 text-[11px] text-zinc-400">
           <CheckCircleIcon size={14} className="text-indigo-400 shrink-0 mt-0.5" />
           <span>
-            By registering, you gain access to the LLM Gateway API cluster and conversation context manager.
+            By creating an account, you can chat with AI and upload PDFs to ask questions.
           </span>
         </div>
 
@@ -313,7 +313,7 @@ export function RegisterForm() {
             </>
           ) : (
             <>
-              <span>Create LLM Gateway Account</span>
+              <span>Create Account</span>
               <ArrowRightIcon size={14} />
             </>
           )}

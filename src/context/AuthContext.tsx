@@ -12,7 +12,6 @@ interface AuthContextType {
   isLoading: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (credentials: RegisterCredentials) => Promise<void>;
-  demoLogin: () => Promise<void>;
   logout: () => void;
 }
 
@@ -84,23 +83,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const demoLogin = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const demoUser: User = {
-        id: "demo-user-1",
-        name: "Alex Vance",
-        email: "alex.vance@gateway.ai",
-        createdAt: new Date().toISOString(),
-      };
-      const response = await authService.mockAuthenticate(demoUser);
-      setToken(response.token || null);
-      setUser(response.user || null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
   const logout = useCallback(() => {
     authService.logout();
     setToken(null);
@@ -116,7 +98,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         login,
         register,
-        demoLogin,
         logout,
       }}
     >

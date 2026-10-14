@@ -3,6 +3,8 @@
 import React, { useState, useMemo } from "react";
 import { useChat } from "@/context/ChatContext";
 import { useAuth } from "@/context/AuthContext";
+import { useNavigation } from "@/context/NavigationContext";
+import { PdfSidebarContent } from "@/components/pdf/PdfSidebarContent";
 import {
   BotIcon,
   PlusIcon,
@@ -13,7 +15,6 @@ import {
   CloseIcon,
   LogOutIcon,
   CheckIcon,
-  SparklesIcon,
 } from "@/components/icons";
 
 interface DateGroupedConversations {
@@ -37,6 +38,8 @@ export function ChatSidebar() {
   } = useChat();
 
   const { user, logout } = useAuth();
+  const { activeMode } = useNavigation();
+  const isPdfMode = activeMode === "pdf";
 
   // State for inline editing of titles
   const [editingId, setEditingId] = useState<string | number | null>(null);
@@ -121,8 +124,8 @@ export function ChatSidebar() {
               <span className="font-bold text-white text-sm tracking-tight">
                 LLM Gateway
               </span>
-              <span className="block text-[10px] text-zinc-500 font-mono">
-                Conversational AI
+              <span className="block text-[10px] text-zinc-500">
+                {isPdfMode ? "PDF Chat" : "AI Chat"}
               </span>
             </div>
           </div>
@@ -135,6 +138,10 @@ export function ChatSidebar() {
           </button>
         </div>
 
+        {isPdfMode ? (
+        <PdfSidebarContent />
+        ) : (
+        <>
         {/* New Chat Button & Search Filter */}
         <div className="p-3.5 space-y-2.5 border-b border-zinc-800/40">
           <button
@@ -295,6 +302,8 @@ export function ChatSidebar() {
             ))
           )}
         </div>
+        </>
+        )}
 
         {/* Footer User Panel */}
         <div className="p-3 border-t border-zinc-800/80 bg-zinc-950/80">
@@ -308,7 +317,7 @@ export function ChatSidebar() {
                   {user?.name || "Anonymous User"}
                 </p>
                 <p className="text-[10px] text-zinc-500 truncate leading-none mt-1">
-                  {user?.email || "Connected via JWT"}
+                  {user?.email || "Signed in"}
                 </p>
               </div>
             </div>

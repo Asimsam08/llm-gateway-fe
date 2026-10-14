@@ -110,7 +110,7 @@ export async function request<T>(
 
     // Network error or offline
     throw new FetchError(
-      error instanceof Error ? error.message : "Network error. Is the backend server running?",
+      error instanceof Error ? error.message : "Unable to connect. Please try again.",
       0
     );
   }
@@ -204,7 +204,7 @@ export function requestFormData<T>(
 
     xhr.onerror = () => {
       reject(
-        new FetchError("Network error. Is the backend server running?", 0)
+        new FetchError("Unable to connect. Please try again.", 0)
       );
     };
 

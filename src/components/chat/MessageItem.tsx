@@ -7,7 +7,6 @@ import {
   CopyIcon,
   CheckIcon,
   RefreshCwIcon,
-  SparklesIcon,
 } from "@/components/icons";
 
 interface MessageItemProps {
@@ -205,10 +204,7 @@ export function MessageItem({ message, userName = "User", onRetry }: MessageItem
         <div className="flex-1 min-w-0 space-y-2">
           {/* Header row */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-white">LLM Gateway</span>
-            <span className="px-1.5 py-0.2 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              Verified Response
-            </span>
+            <span className="text-xs font-semibold text-white">Assistant</span>
           </div>
 
           {/* Content */}

@@ -5,6 +5,7 @@ import { usePdfChat } from "@/context/PdfChatContext";
 import { useAuth } from "@/context/AuthContext";
 import { useChat } from "@/context/ChatContext";
 import { useNavigation } from "@/context/NavigationContext";
+import { useDialog } from "@/context/DialogContext";
 import { PdfQuery } from "@/types/pdfChat";
 import { PdfUploadDropzone } from "./PdfUploadDropzone";
 import { PdfDocumentCard, PdfProcessingPanel } from "./PdfDocumentCard";
@@ -43,6 +44,7 @@ export function PdfChatInterface({
   } = usePdfChat();
   const { toggleSidebar } = useChat();
   const { activeMode, setActiveMode } = useNavigation();
+  const { confirm } = useDialog();
   const { user } = useAuth();
 
   const [questionInput, setQuestionInput] = useState(initialPrompt);
@@ -182,9 +184,14 @@ export function PdfChatInterface({
             <button
               type="button"
               onClick={() => {
-                if (confirm("Delete this PDF and its conversation history?")) {
-                  void deleteDocument(activeDocument.documentId || activeDocument.id);
-                }
+                const name = activeDocument.fileName || activeDocument.name || "this PDF";
+                void confirm({
+                  title: "Delete this PDF?",
+                  description: `“${name}” and its conversation history will be removed. This cannot be undone.`,
+                  confirmLabel: "Delete PDF",
+                  tone: "danger",
+                  action: () => deleteDocument(activeDocument.documentId || activeDocument.id),
+                });
               }}
               className="p-2 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors"
               title="Delete PDF conversation"

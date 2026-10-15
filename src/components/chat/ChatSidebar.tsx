@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { useChat } from "@/context/ChatContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigation } from "@/context/NavigationContext";
+import { useDialog } from "@/context/DialogContext";
 import { PdfSidebarContent } from "@/components/pdf/PdfSidebarContent";
 import {
   BotIcon,
@@ -39,6 +40,7 @@ export function ChatSidebar() {
 
   const { user, logout } = useAuth();
   const { activeMode } = useNavigation();
+  const { confirm } = useDialog();
   const isPdfMode = activeMode === "pdf";
 
   // State for inline editing of titles
@@ -91,11 +93,15 @@ export function ChatSidebar() {
     setEditingId(null);
   };
 
-  const handleDelete = (e: React.MouseEvent, id: string | number) => {
+  const handleDelete = (e: React.MouseEvent, id: string | number, title: string) => {
     e.stopPropagation();
-    if (confirm("Delete this conversation?")) {
-      deleteConversation(id);
-    }
+    void confirm({
+      title: "Delete this conversation?",
+      description: `“${title || "This conversation"}” and its messages will be permanently removed.`,
+      confirmLabel: "Delete conversation",
+      tone: "danger",
+      action: () => deleteConversation(id),
+    });
   };
 
   return (
@@ -285,7 +291,7 @@ export function ChatSidebar() {
                               </button>
                               <button
                                 type="button"
-                                onClick={(e) => handleDelete(e, conv.id)}
+                                onClick={(e) => handleDelete(e, conv.id, conv.title)}
                                 className="p-1 rounded text-zinc-500 hover:text-red-400 hover:bg-zinc-800 transition-colors"
                                 title="Delete"
                               >

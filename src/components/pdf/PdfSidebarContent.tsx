@@ -3,6 +3,7 @@
 import React from "react";
 import { usePdfChat } from "@/context/PdfChatContext";
 import { useNavigation } from "@/context/NavigationContext";
+import { useDialog } from "@/context/DialogContext";
 import {
   FileTextIcon,
   PlusIcon,
@@ -23,6 +24,7 @@ export function PdfSidebarContent() {
   } = usePdfChat();
 
   const { setActiveMode } = useNavigation();
+  const { confirm } = useDialog();
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
@@ -107,9 +109,15 @@ export function PdfSidebarContent() {
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (confirm(`Delete PDF "${doc.fileName || doc.name}"?`)) {
-                          deleteDocument(doc.documentId || doc.id);
-                        }
+                        const name = doc.fileName || doc.name || "this PDF";
+                        void confirm({
+                          title: `Delete “${name}”?`,
+                          description:
+                            "The PDF and any questions you’ve asked about it will be removed. This cannot be undone.",
+                          confirmLabel: "Delete PDF",
+                          tone: "danger",
+                          action: () => deleteDocument(doc.documentId || doc.id),
+                        });
                       }}
                       className="opacity-0 group-hover:opacity-100 p-1 rounded text-zinc-500 hover:text-red-400 hover:bg-zinc-800 transition-opacity"
                       title="Delete PDF"

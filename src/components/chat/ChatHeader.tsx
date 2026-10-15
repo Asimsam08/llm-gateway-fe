@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useChat } from "@/context/ChatContext";
 import { useNavigation } from "@/context/NavigationContext";
+import { useDialog } from "@/context/DialogContext";
 import {
   MenuIcon,
   PlusIcon,
@@ -24,6 +25,7 @@ export function ChatHeader() {
   } = useChat();
 
   const { activeMode, setActiveMode } = useNavigation();
+  const { confirm } = useDialog();
   const [isEditing, setIsEditing] = useState(false);
   const [titleInput, setTitleInput] = useState("");
 
@@ -139,9 +141,14 @@ export function ChatHeader() {
         {activeConversation && messages.length > 0 && (
           <button
             onClick={() => {
-              if (confirm("Delete this conversation?")) {
-                deleteConversation(activeConversation.id);
-              }
+              const title = activeConversation.title || "this conversation";
+              void confirm({
+                title: "Delete this conversation?",
+                description: `“${title}” and its messages will be permanently removed.`,
+                confirmLabel: "Delete conversation",
+                tone: "danger",
+                action: () => deleteConversation(activeConversation.id),
+              });
             }}
             className="p-2 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors"
             title="Delete Conversation"

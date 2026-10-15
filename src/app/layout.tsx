@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import { DialogProvider } from "@/context/DialogContext";
 import { NavigationProvider } from "@/context/NavigationContext";
 import { PdfChatProvider } from "@/context/PdfChatContext";
 
@@ -35,9 +36,11 @@ export default function RootLayout({
     >
       <body className="h-full bg-[#090a0f] text-zinc-100 selection:bg-indigo-500/30 selection:text-indigo-200 antialiased overflow-hidden">
         <AuthProvider>
-          <NavigationProvider>
-            <PdfChatProvider>{children}</PdfChatProvider>
-          </NavigationProvider>
+          <DialogProvider>
+            <NavigationProvider>
+              <PdfChatProvider>{children}</PdfChatProvider>
+            </NavigationProvider>
+          </DialogProvider>
         </AuthProvider>
       </body>
     </html>

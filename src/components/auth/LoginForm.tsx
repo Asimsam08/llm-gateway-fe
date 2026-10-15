@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { useDialog } from "@/context/DialogContext";
 import { FetchError } from "@/lib/api";
 import {
   MailIcon,
@@ -18,6 +19,7 @@ import {
 export function LoginForm() {
   const router = useRouter();
   const { login, isLoading, isAuthenticated } = useAuth();
+  const { notify } = useDialog();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -151,7 +153,13 @@ export function LoginForm() {
             </label>
             <button
               type="button"
-              onClick={() => alert("Password recovery is managed by your LLM Gateway administrator.")}
+              onClick={() =>
+                void notify({
+                  title: "Password recovery",
+                  description:
+                    "Password recovery is managed by your LLM Gateway administrator. Contact them to reset your password.",
+                })
+              }
               className="text-[11px] text-indigo-400 hover:text-indigo-300 transition-colors"
             >
               Forgot password?
